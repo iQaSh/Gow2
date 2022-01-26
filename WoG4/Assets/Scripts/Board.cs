@@ -26,6 +26,7 @@ public class Board : MonoBehaviour
     public GameObject[] gems;
     public GameObject[,] allGems;
     private float rotationDuration = 0.5f;
+    private PlayerStatsManager playerStatsManager;
 
 
 
@@ -35,6 +36,7 @@ public class Board : MonoBehaviour
     {
      //   GenerateGrid();
         tile = FindObjectOfType<Tile>();
+        playerStatsManager = FindObjectOfType<PlayerStatsManager>();
         hintManager = FindObjectOfType<HintManager>();
         findMatches = FindObjectOfType<FindMatches>();
         allTiles = new BackgroundTile[width, height];
@@ -52,7 +54,8 @@ public class Board : MonoBehaviour
             {
             
                 Vector2 tempPosition = new Vector2(x, y + offSet);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                Vector2 tilePosition = new Vector2(x, y);
+                GameObject backgroundTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;//Возможно тут точка отсчета
                 backgroundTile.name = $"{x},{y}";
 
@@ -118,16 +121,21 @@ public class Board : MonoBehaviour
         {
             var icon1Transform = allGems[column, row].transform;
 
-           
 
+            playerStatsManager.RecieveMana(allGems[column, row]);
             icon1Transform.DORotate(new Vector3(0, 360, 0), rotationDuration, RotateMode.FastBeyond360).OnComplete(() =>
             {
-                Debug.Log("DestroyMatchesAt");
+        //        Debug.Log("DestroyMatchesAt");
+        
                 hintManager.sequence.Kill();
                 DOTween.Kill(hintManager.icon1Transform);
                 DOTween.Kill(hintManager.icon2Transform);
                 findMatches.currentMatches.Remove(allGems[column, row]);
+
+
+                
                 Destroy(allGems[column, row]);
+                
                 allGems[column, row] = null;
 
                 hintManager.isHint = false;
