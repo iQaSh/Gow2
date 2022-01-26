@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd82a9e162665f4ab17dc6da5816ec8, type: 3}
+  m_Name: GainHP
+  m_EditorClassIdentifier: 
+  skillID: 2
+  skillName: Gain HP
+  description: Increase HP
+  Icon: {fileID: 21300000, guid: 3797690b547c6fd469fd51cd75559e4a, type: 3}
+  levelNeeded: 1
+  SPNeeded: 10
+  skillLevel: 1
+  isActive: 0
+  isActivated: 0
