@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,12 @@ public class PlayerStatsManager : MonoBehaviour
     public int yellowMP;
     public int blueMP;
     public int brownMP;
+
+
+
+    public delegate void MPRecieveEvent();
+    public static event MPRecieveEvent recieveMPEvent;
+
 
     private void Start()
     {
@@ -62,7 +69,9 @@ public class PlayerStatsManager : MonoBehaviour
             brownMPText.text = $"{brownMP}/100";
 
         }
-
+        recieveMPEvent();
     }
+
+
 
 }

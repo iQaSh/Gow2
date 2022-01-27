@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WizardSkills : MonoBehaviour
 {
-    public int getSkillMP(int skillID)
+    public (string color, int MP) getSkillMP(int skillID)
     {
         if (skillID == 0)
         {
@@ -51,64 +51,64 @@ public class WizardSkills : MonoBehaviour
             return getMPInferno(1);
         }
 
-        return 0;
+        return getMPInferno(1);
     }
 
 
 
-    public int getMPFireball(int skillLevel)
+    public (string color, int MP) getMPFireball(int skillLevel)
     {
-        return 30;
+        return ("red", 10);
     }
 
-    public int getMPGhostEye(int skillLevel)
+    public (string color, int MP) getMPGhostEye(int skillLevel)
     {
-        return 25;
+        return ("green", 6);
     }
 
-    public int getMPICeRock(int skillLevel)
+    public (string color, int MP) getMPICeRock(int skillLevel)
     {
-        return 30;
+        return ("yellow", 7);
     }
 
-    public int getMPLightningBolt(int skillLevel)
+    public (string color, int MP) getMPLightningBolt(int skillLevel)
     {
-        return 35;
+        return ("blue", 5);
     }
 
-    public int getMPShadowMove(int skillLevel)
+    public (string color, int MP) getMPShadowMove(int skillLevel)
     {
-        return 40;
+        return ("brown", 3);
     }
 
-    public int getMPDarkFlame(int skillLevel)
+    public (string color, int MP) getMPDarkFlame(int skillLevel)
     {
-        return 45;
+        return ("red", 7);
     }
 
-    public int getMPSlurm(int skillLevel)
+    public (string color, int MP) getMPSlurm(int skillLevel)
     {
-        return 50;
+        return ("red", 60);
     }
 
-    public int getMPWolfcry(int skillLevel)
+    public (string color, int MP) getMPWolfcry(int skillLevel)
     {
-        return 50;
+        return ("brown", 5);
     }
 
-    public int getMPMeteor(int skillLevel)
+    public (string color, int MP) getMPMeteor(int skillLevel)
     {
-        return 55;
+        return ("red", 70);
     }
 
-    public int getMPPowerBlast(int skillLevel)
+    public (string color, int MP) getMPPowerBlast(int skillLevel)
     {
-        return 60;
+        return ("red", 75);
     }
 
-    public int getMPInferno(int skillLevel)
+    public (string color, int MP) getMPInferno(int skillLevel)
     {
-        return 65;
+        return ("red", 80);
     }
 
 
