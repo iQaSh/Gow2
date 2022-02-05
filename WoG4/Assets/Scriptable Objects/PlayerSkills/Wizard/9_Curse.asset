@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd82a9e162665f4ab17dc6da5816ec8, type: 3}
-  m_Name: Gain MP
+  m_Script: {fileID: 11500000, guid: 660d80d488c3dda4a8031225162f8757, type: 3}
+  m_Name: 9_Curse
   m_EditorClassIdentifier: 
-  skillID: 3
-  skillName: Gain MP
-  description: Increase MP
-  Icon: {fileID: 21300000, guid: 3e803ce8eded1e64db217d9bf3fabe52, type: 3}
-  levelNeeded: 1
-  SPNeeded: 10
+  skillID: 9
+  skillName: Curse
+  description: Curse
+  Icon: {fileID: 21300000, guid: 1ac2c9c6410a05a45b1a8b454d21ded0, type: 3}
+  levelNeeded: 4
+  SPNeeded: 40
   skillLevel: 1
-  isActive: 0
+  isActive: 1
   isActivated: 0

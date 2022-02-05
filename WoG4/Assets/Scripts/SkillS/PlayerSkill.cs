@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerSkill : MonoBehaviour
 {
-    public PlayerSkillsSO playerSkillsSO;
+    public PlayerSkillSO playerSkillSO;
     public Text skillName;
     public Text SP;
     public Image skillImage;
@@ -17,17 +17,17 @@ public class PlayerSkill : MonoBehaviour
     void Start()
     {
         playerSkillSlot = FindObjectOfType<PlayerSkillSlot>();
-        skillName.text = playerSkillsSO.skillName;
-        SP.text = $"{playerSkillsSO.SPNeeded} SP";
-        skillImage.sprite = playerSkillsSO.Icon;
+        skillName.text = playerSkillSO.skillName;
+        SP.text = $"{playerSkillSO.SPNeeded} SP";
+        skillImage.sprite = playerSkillSO.Icon;
 
     }
 
     public void ActivateSkill()
     {
         fadePanel.SetActive(false);
-        playerSkillSlot.GetComponent<Image>().sprite = playerSkillsSO.Icon;
-        playerSkillSlot.skillID = playerSkillsSO.skillID;
+        playerSkillSlot.GetComponent<Image>().sprite = playerSkillSO.Icon;
+        playerSkillSlot.skillID = playerSkillSO.skillID;
     }
 
 

@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class SkillButton : MonoBehaviour
 {
+    public PlayerSkillSO playerSkillSO;
     public Image skillImage;
+    public Image skillImg;
     public Image skillDragImage;
     public Text skillNameText;
     public Text skillDescriptionText;
@@ -24,19 +26,21 @@ public class SkillButton : MonoBehaviour
     {
         skillManager = FindObjectOfType<SkillManager>();
         skillPanelManager = FindObjectOfType<SkillPanelManager>();
-        upgradeButtonText = GameObject.FindWithTag("UpgradeButtonText").GetComponent<Text>(); 
+        upgradeButtonText = GameObject.FindWithTag("UpgradeButtonText").GetComponent<Text>();
+        skillImg.sprite = playerSkillSO.Icon;
+        skillButtonId = playerSkillSO.skillID;
     }
 
     public void PressSkillButton()
     {
         SkillManager.instance.activateSkill = transform.GetComponent<Skill>();
 
-        skillImage.sprite = SkillManager.instance.skills[skillButtonId].skillSprite;
-        skillDragImage.sprite = SkillManager.instance.skills[skillButtonId].skillSprite;
-        skillNameText.text = SkillManager.instance.skills[skillButtonId].skillName;
-        skillDescriptionText.text = SkillManager.instance.skills[skillButtonId].skillDes;
+        skillImage.sprite = skillImg.sprite;
+        skillDragImage.sprite = skillImg.sprite;
+        skillNameText.text = playerSkillSO.skillName;
+        skillDescriptionText.text = playerSkillSO.description;
         skillManager.skillId = skillButtonId;
-        GameObject.FindWithTag("SkillToDrag").GetComponent<PlayerSkillSlot>().skillID = skillButtonId; //присваиваем skillID скрипту PlayerSkillSlot от иконки справа
+        GameObject.FindWithTag("SkillToDrag").GetComponent<PlayerSkillSlot>().skillID = playerSkillSO.skillID; //присваиваем skillID скрипту PlayerSkillSlot от иконки справа
 
         //skillPanelManager.skills[0].skillImage.sprite = SkillManager.instance.skills[skillButtonId].skillSprite;
         //skillPanelManager.skills[0].skillImage.GetComponent<PressSkill>().skillId = skillButtonId;

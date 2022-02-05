@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660d80d488c3dda4a8031225162f8757, type: 3}
+  m_Name: 3_LightShield
+  m_EditorClassIdentifier: 
+  skillID: 3
+  skillName: Light Shield
+  description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
+    \u0437\u0430\u0449\u0438\u0442\u0443 \u043E\u0442 \u0432\u043E\u0437\u0434\u0443\u0445\u0430
+    \u043D\u0430 1"
+  Icon: {fileID: 21300000, guid: 7fda24372dde79146857c0688283cdb7, type: 3}
+  levelNeeded: 2
+  SPNeeded: 20
+  skillLevel: 1
+  isActive: 0
+  isActivated: 0

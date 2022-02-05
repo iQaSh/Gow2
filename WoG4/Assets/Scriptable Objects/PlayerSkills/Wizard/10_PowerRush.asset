@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd82a9e162665f4ab17dc6da5816ec8, type: 3}
-  m_Name: GainHP
+  m_Script: {fileID: 11500000, guid: 660d80d488c3dda4a8031225162f8757, type: 3}
+  m_Name: 10_PowerRush
   m_EditorClassIdentifier: 
-  skillID: 2
-  skillName: Gain HP
-  description: Increase HP
-  Icon: {fileID: 21300000, guid: 3797690b547c6fd469fd51cd75559e4a, type: 3}
-  levelNeeded: 1
-  SPNeeded: 10
+  skillID: 10
+  skillName: Power Rush
+  description: Power Rush
+  Icon: {fileID: 21300000, guid: fc0ece68a0a560242b2b29d13aeb1f92, type: 3}
+  levelNeeded: 4
+  SPNeeded: 40
   skillLevel: 1
-  isActive: 0
+  isActive: 1
   isActivated: 0

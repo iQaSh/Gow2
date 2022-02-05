@@ -12,6 +12,7 @@ public class SkillSlot : MonoBehaviour, IDropHandler
     private PlayerStatsManager playerStatsManager;
     public bool readyToUse = false;
     public GameObject fadePanel;
+    private SkillPanelManager skillPanelManager;
 
 
 
@@ -22,6 +23,7 @@ public class SkillSlot : MonoBehaviour, IDropHandler
     {
         playerStatsManager = FindObjectOfType<PlayerStatsManager>();
         wizardSkills = FindObjectOfType<WizardSkills>();
+        skillPanelManager = FindObjectOfType<SkillPanelManager>();
     }
 
     private void OnEnable()
@@ -75,33 +77,59 @@ public class SkillSlot : MonoBehaviour, IDropHandler
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
 
             skillID = eventData.pointerDrag.GetComponent<PlayerSkillSlot>().skillID;
-            GetComponent<Image>().sprite = eventData.pointerDrag.GetComponent<Image>().sprite;
+            GetComponent<Image>().sprite = skillPanelManager.playerSkills[skillID].Icon;
+            //playerStatsManager.SetImagesToSkill(skillID);
             MPText.SetActive(true);
 
+            SetSkillMP(skillID);
+            //var result = wizardSkills.getSkillMP(skillID);//кортеж Tuple с цветом и количеством MP
+            //skillSlotMP = result.MP;
 
-            var result = wizardSkills.getSkillMP(skillID);//кортеж Tuple с цветом и количеством MP
-            skillSlotMP = result.MP;
-           
-            skillColor = result.color;
-            Debug.Log("skillColor = " + skillColor);
-            if (skillColor == "red")
-            {
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++SetRed MP = " + skillSlotMP);
-                MPText.GetComponent<Text>().color = Color.red;
-            }
-                
-            if (skillColor == "blue")
-                MPText.GetComponent<Text>().color = Color.blue;
-            if (skillColor == "yellow")
-                MPText.GetComponent<Text>().color = Color.yellow;
-            if (skillColor == "green")
-                MPText.GetComponent<Text>().color = Color.green;
-            if (skillColor == "brown")
-                MPText.GetComponent<Text>().color = Color.black;
-            MPText.GetComponent<Text>().text = $"{skillSlotMP}";
-            
+            //skillColor = result.color;
+            //Debug.Log("skillColor = " + skillColor);
+            //if (skillColor == "red")
+            //{
+            //    MPText.GetComponent<Text>().color = Color.red;
+            //}
+
+            //if (skillColor == "blue")
+            //    MPText.GetComponent<Text>().color = Color.blue;
+            //if (skillColor == "yellow")
+            //    MPText.GetComponent<Text>().color = Color.yellow;
+            //if (skillColor == "green")
+            //    MPText.GetComponent<Text>().color = Color.green;
+            //if (skillColor == "brown")
+            //    MPText.GetComponent<Text>().color = Color.black;
+            //MPText.GetComponent<Text>().text = $"{skillSlotMP}";
+
         }
     }
+
+    public void SetSkillMP(int sskillID)
+    {
+        var result = wizardSkills.getSkillMP(sskillID);//кортеж Tuple с цветом и количеством MP
+        skillSlotMP = result.MP;
+
+        skillColor = result.color;
+        Debug.Log("skillColor = " + skillColor);
+        if (skillColor == "red")
+        {
+            MPText.GetComponent<Text>().color = Color.red;
+        }
+
+        if (skillColor == "blue")
+            MPText.GetComponent<Text>().color = Color.blue;
+        if (skillColor == "yellow")
+            MPText.GetComponent<Text>().color = Color.yellow;
+        if (skillColor == "green")
+            MPText.GetComponent<Text>().color = Color.green;
+        if (skillColor == "brown")
+            MPText.GetComponent<Text>().color = Color.black;
+        MPText.GetComponent<Text>().text = $"{skillSlotMP}";
+    }
+
+
+
 
     public void UseSkill()
     {

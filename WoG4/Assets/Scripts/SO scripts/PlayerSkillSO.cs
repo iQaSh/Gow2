@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(menuName = "Player/Skills")]
-public class PlayerSkillsSO : ScriptableObject
+public class PlayerSkillSO : ScriptableObject
 {
     public int skillID;
     public string skillName;
@@ -14,7 +15,7 @@ public class PlayerSkillsSO : ScriptableObject
     public int skillLevel;
     public bool isActive;
     public bool isActivated;
-
+    
 
 
 }

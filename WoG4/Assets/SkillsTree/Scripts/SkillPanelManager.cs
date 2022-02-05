@@ -9,6 +9,7 @@ public class BlankSkill
 {
     public Image skillImage;
     public int skillId;
+
 }
 
 
@@ -16,6 +17,7 @@ public class SkillPanelManager : MonoBehaviour
 {
 
     public BlankSkill[] skills;
+    public PlayerSkillSO[] playerSkills;
     // Start is called before the first frame update
     void Start()
     {

@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class PlayerStatsManager : MonoBehaviour
 {
-
-    public int PlayerMaxHP;
+    //public String playerName;
+    public int playerMaxHP = 100;
     public Text playerHPText;
-    public int PlayerLvl;
-    public int PlayerXP;
-    public int PlayerSP;
+    public int playerLvl;
+    public int playerXP;
+    public int playerSP;
     public Text redMPText;
     public Text greenMPText;
     public Text yellowMPText;
@@ -22,16 +22,36 @@ public class PlayerStatsManager : MonoBehaviour
     public int yellowMP;
     public int blueMP;
     public int brownMP;
+    public GameObject[] skillSlot;
+    //   public SaveData saveData;
+    private SkillPanelManager skillPanelManager;
+
+
 
 
 
     public delegate void MPRecieveEvent();
     public static event MPRecieveEvent recieveMPEvent;
 
+    public void SetImagesToSkill(int ID, int slot)
+    {
+        //for (int i = 0; i < skillSlot.Length; i++)
+        //{
+        //    if (ID < 999)
+        //    {
+        //        Debug.Log("skill id = " + ID);
+        //        skillSlot[i].GetComponent<Image>().sprite = skillPanelManager.playerSkills[ID].Icon;
+        //    }
+        //}
+        skillSlot[slot].GetComponent<Image>().sprite = skillPanelManager.playerSkills[ID].Icon;
+
+    }
+
 
     private void Start()
     {
-        playerHPText.text = $"{PlayerMaxHP}/{PlayerMaxHP}";
+        playerHPText.text = $"{playerMaxHP}/{playerMaxHP}";
+        skillPanelManager = FindObjectOfType<SkillPanelManager>();
 
     }
 
