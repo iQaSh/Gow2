@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5b1a69f645b22458b72393b66a065d, type: 3}
+  m_Name: Lizardman
+  m_EditorClassIdentifier: 
+  name: Lizardman
+  icon: {fileID: 21300000, guid: 3878cc3b88898d541a2e045b9dd5471b, type: 3}
+  lvl: 1
+  HP: 110
+  maxRedMP: 50
+  maxBlueMP: 50
+  maxYellowMP: 50
+  maxGreenMP: 100
+  maxBrownMP: 50
+  enemySkillSO:
+  - {fileID: 11400000, guid: 5f5923e6d30e86c48910c97530b8e649, type: 2}
+  - {fileID: 11400000, guid: 5f5923e6d30e86c48910c97530b8e649, type: 2}
+  firstSkillId: 0
+  secondSkillId: 999
+  thirdSkillId: 999
+  fourthSkillId: 999
+  fifthSkillId: 999

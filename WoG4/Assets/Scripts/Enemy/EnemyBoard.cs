@@ -21,13 +21,14 @@ public class EnemyBoard : MonoBehaviour
     public GameObject[] gems;
     public GameObject[,] allEnemyGems;
     private float rotationDuration = 0.2f;
+    private MoveManager moveManager;
 
-
-
+    private bool isDestroyedAtThisMove = false;//áûë ëè ìàò÷ â ıòîì õîäå, äëÿ ïğîâåğêè ïåğåõîäà õîäà
 
 
     private void Start()
     {
+        moveManager = FindObjectOfType<MoveManager>();
         //   GenerateGrid();
         tile = FindObjectOfType<Tile>();
       //  enemyMove = FindObjectOfType<EnemyMove>();
@@ -110,10 +111,11 @@ public class EnemyBoard : MonoBehaviour
 
     private void DestroyMatchesAt(int column, int row)
     {
+        
         if (allEnemyGems[column, row].GetComponent<EnemyGem>().isMatched)
         {
             var icon1Transform = allEnemyGems[column, row].transform;
-
+            Debug.Log($"DestroyMatchesAt +++++++++++++++++++++++++++++++++++");
 
 
             icon1Transform.DORotate(new Vector3(0, 360, 0), rotationDuration, RotateMode.FastBeyond360).OnComplete(() =>
@@ -123,7 +125,7 @@ public class EnemyBoard : MonoBehaviour
                 findMatches.currentMatches.Remove(allEnemyGems[column, row]);
                 Destroy(allEnemyGems[column, row]);
                 allEnemyGems[column, row] = null;
-
+                isDestroyedAtThisMove = true;
 
 
             });
@@ -141,7 +143,7 @@ public class EnemyBoard : MonoBehaviour
             {
                 if (allEnemyGems[x, y] != null)
                 {
-
+                    
                     DestroyMatchesAt(x, y);
 
 
@@ -155,7 +157,7 @@ public class EnemyBoard : MonoBehaviour
 
     private IEnumerator DecreaseRowCo()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
         int nullCount = 0;
 
         for (int x = 0; x < width; x++)
@@ -204,6 +206,9 @@ public class EnemyBoard : MonoBehaviour
                     allEnemyGems[x, y] = piece;
                     piece.GetComponent<EnemyGem>().row = y;
                     piece.GetComponent<EnemyGem>().column = x;
+
+
+                    piece.transform.parent = this.transform;
                 }
             }
         }
@@ -231,6 +236,23 @@ public class EnemyBoard : MonoBehaviour
 
     }
 
+    private bool CheckAllGemsOnPlace() //ïğîâåğêà íà ìåñòå ëè âñå ãåìû
+    {
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allEnemyGems[x, y] == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
+
     private IEnumerator FillBoardCo()
     {
 
@@ -239,7 +261,7 @@ public class EnemyBoard : MonoBehaviour
 
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.3f);
             DestroyMatches();
         }
 
@@ -252,6 +274,19 @@ public class EnemyBoard : MonoBehaviour
         }
 
         currentState = GameState.move;
+
+        yield return new WaitForSeconds(.5f);
+
+        yield return new WaitForSeconds(1f);
+
+        if (CheckAllGemsOnPlace() == true && MatchesOnBoard() == false)
+        {
+            Debug.Log("êîíåö õîäà âğàãà");
+            moveManager.EndEnemyMove();// êîíåö õîäà
+            isDestroyedAtThisMove = false;
+        }
+
+   
     }
 
 
@@ -342,22 +377,22 @@ public class EnemyBoard : MonoBehaviour
 
     public bool SwitchAndCheck(int column, int row, Vector2 direction)
     {
-        Debug.Log($"SwitchAndCheck {column}, {row} | direction.x = {direction.x}, direction.y = {direction.y} ");
+      //  Debug.Log($"SwitchAndCheck {column}, {row} | direction.x = {direction.x}, direction.y = {direction.y} ");
         if (column + direction.x >= 0 && column + direction.x <= width - 1 && row + direction.y >= 0 && row + direction.x <= height - 1 )
         {
-            Debug.Log($"SwitchAndCheck ÏĞÎÂÅĞÊÓ ÏĞÎØÅË ");
+         //   Debug.Log($"SwitchAndCheck ÏĞÎÂÅĞÊÓ ÏĞÎØÅË ");
             SwitchPieces(column, row, direction);
             if (CheckForMatches())
             {
                 SwitchPieces(column, row, direction);
-                Debug.Log("SwitchAndCheck true");
+         //       Debug.Log("SwitchAndCheck true");
                 return true;
             }
-            Debug.Log("SwitchAndCheck false");
+       //     Debug.Log("SwitchAndCheck false");
             SwitchPieces(column, row, direction);
             return false;
         }
-        Debug.Log("SwitchAndCheck ÏĞÎÂÅĞÊÓ ÍÅÅÅÅÅÅÅÅÅÅÅ ÏĞÎØÅË");
+       // Debug.Log("SwitchAndCheck ÏĞÎÂÅĞÊÓ ÍÅÅÅÅÅÅÅÅÅÅÅ ÏĞÎØÅË");
         return false;
     }
 

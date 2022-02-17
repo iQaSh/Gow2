@@ -81,7 +81,7 @@ public class SkillSlot : MonoBehaviour, IDropHandler
             //playerStatsManager.SetImagesToSkill(skillID);
             MPText.SetActive(true);
 
-            SetSkillMP(skillID);
+            SetSkillMP();
             //var result = wizardSkills.getSkillMP(skillID);//кортеж Tuple с цветом и количеством MP
             //skillSlotMP = result.MP;
 
@@ -105,9 +105,10 @@ public class SkillSlot : MonoBehaviour, IDropHandler
         }
     }
 
-    public void SetSkillMP(int sskillID)
+    public void SetSkillMP()
     {
-        var result = wizardSkills.getSkillMP(sskillID);//кортеж Tuple с цветом и количеством MP
+        
+        var result = wizardSkills.getSkillMP(skillID);//кортеж Tuple с цветом и количеством MP
         skillSlotMP = result.MP;
 
         skillColor = result.color;
@@ -125,6 +126,9 @@ public class SkillSlot : MonoBehaviour, IDropHandler
             MPText.GetComponent<Text>().color = Color.green;
         if (skillColor == "brown")
             MPText.GetComponent<Text>().color = Color.black;
+
+        MPText.SetActive(true);
+        Debug.Log("-------------------------SetSkillMP " + skillSlotMP);
         MPText.GetComponent<Text>().text = $"{skillSlotMP}";
     }
 

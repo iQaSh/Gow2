@@ -25,8 +25,11 @@ public class Board : MonoBehaviour
     private BackgroundTile[,] allTiles;
     public GameObject[] gems;
     public GameObject[,] allGems;
-    private float rotationDuration = 0.5f;
+    private float rotationDuration = 0.1f;
     private PlayerStatsManager playerStatsManager;
+    private MoveManager moveManager;
+
+    private bool isDestroyedAtThisMove = false;//был ли матч в этом ходе, для проверки перехода хода
 
 
 
@@ -34,7 +37,9 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
-     //   GenerateGrid();
+        //   GenerateGrid();
+        moveManager = FindObjectOfType<MoveManager>();
+
         tile = FindObjectOfType<Tile>();
         playerStatsManager = FindObjectOfType<PlayerStatsManager>();
         hintManager = FindObjectOfType<HintManager>();
@@ -42,6 +47,7 @@ public class Board : MonoBehaviour
         allTiles = new BackgroundTile[width, height];
         allGems = new GameObject[width, height];
         SetUp();
+
 
     }
 
@@ -123,28 +129,69 @@ public class Board : MonoBehaviour
 
 
             playerStatsManager.RecieveMana(allGems[column, row]);
-            icon1Transform.DORotate(new Vector3(0, 360, 0), rotationDuration, RotateMode.FastBeyond360).OnComplete(() =>
-            {
-        //        Debug.Log("DestroyMatchesAt");
-        
-                hintManager.sequence.Kill();
-                DOTween.Kill(hintManager.icon1Transform);
-                DOTween.Kill(hintManager.icon2Transform);
-                findMatches.currentMatches.Remove(allGems[column, row]);
+
+            //icon1Transform.DORotate(new Vector3(0, 360, 0), rotationDuration, RotateMode.FastBeyond360).OnComplete(() =>
+            //{
+            //        //        Debug.Log("DestroyMatchesAt");
+
+            //    hintManager.sequence.Kill();
+
+            //    DOTween.Kill(hintManager.icon1Transform);
+            //    DOTween.Kill(hintManager.icon2Transform);
+            //    findMatches.currentMatches.Remove(allGems[column, row]);
+
+            //    Destroy(allGems[column, row]);
+
+            //    allGems[column, row] = null;
+
+            //    hintManager.isHint = false;
+
+            //    isDestroyedAtThisMove = true;
+            //    Debug.Log($"DESTROYED {column}, {row}");
 
 
-                
-                Destroy(allGems[column, row]);
-                
-                allGems[column, row] = null;
 
-                hintManager.isHint = false;
+            //    if (MatchesOnBoard() == false)
+            //    {
+            //        findMatches.currentMatches.Clear(); //из DestroyMatches()!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //        StartCoroutine(DecreaseRowCo()); //из DestroyMatches()!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //    }
 
 
-            });
-              
+            //});
+            hintManager.sequence.Kill();
+
+            findMatches.currentMatches.Remove(allGems[column, row]);
+
+
+
+            Destroy(allGems[column, row]);
+
+            allGems[column, row] = null;
+
+            hintManager.isHint = false;
+
+            isDestroyedAtThisMove = true;
 
         }
+    }
+
+
+    private bool CheckAllGemsOnPlace() //проверка на месте ли все гемы
+    {
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (allGems[x, y] == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 
     public void DestroyMatches()
@@ -170,7 +217,9 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo()
     {
-        yield return new WaitForSeconds(.5f);
+
+        Debug.Log("DecreaseRowCo");
+        yield return new WaitForSeconds(.1f);
         int nullCount = 0;
 
         for (int x = 0; x < width; x++)
@@ -199,7 +248,7 @@ public class Board : MonoBehaviour
             nullCount = 0;
         }
 
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.3f);
         StartCoroutine(FillBoardCo());
 
 
@@ -219,6 +268,10 @@ public class Board : MonoBehaviour
                     allGems[x, y] = piece;
                     piece.GetComponent<Gem>().row = y;
                     piece.GetComponent<Gem>().column = x;
+
+
+
+                    piece.transform.parent = this.transform;
                 }
             }
         }
@@ -254,7 +307,7 @@ public class Board : MonoBehaviour
 
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.3f);
             DestroyMatches();
         }
 
@@ -267,6 +320,14 @@ public class Board : MonoBehaviour
         }
 
         currentState = GameState.move;
+
+        yield return new WaitForSeconds(1f);
+        if (isDestroyedAtThisMove == true && CheckAllGemsOnPlace() == true && MatchesOnBoard() == false)
+        {
+            moveManager.EndPlayerMove();
+            isDestroyedAtThisMove = false;
+        }
+        
     }
 
 

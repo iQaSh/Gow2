@@ -51,7 +51,20 @@ public class GameSaveManager : MonoBehaviour
             }
         }
         SetSkillSlots();
+        SetPlayerStats();
 
+
+    }
+
+    private void SetPlayerStats() // загрузка статов игрока
+    {
+        playerStatsManager.playerMaxHP = saveData.playerMaxHp;
+        playerStatsManager.playerLvl = saveData.playerLevel;
+        playerStatsManager.maxRedMP = saveData.maxRedMP;
+        playerStatsManager.maxGreenMP = saveData.maxGreenMP;
+        playerStatsManager.maxYellowMP = saveData.maxYellowMP;
+        playerStatsManager.maxBlueMP = saveData.maxBlueMP;
+        playerStatsManager.maxBrownMP = saveData.maxBrownMP;
     }
 
     public void SetSaveData()
@@ -78,11 +91,11 @@ public class GameSaveManager : MonoBehaviour
 
         }
         saveData.playerLevel = playerStatsManager.playerLvl;
-        saveData.maxRedMP = playerStatsManager.redMP;
-        saveData.maxGreenMP = playerStatsManager.greenMP;
-        saveData.maxYellowMP = playerStatsManager.yellowMP;
-        saveData.maxBlueMP = playerStatsManager.blueMP;
-        saveData.maxBrownMP = playerStatsManager.brownMP;
+        saveData.maxRedMP = playerStatsManager.maxRedMP;
+        saveData.maxGreenMP = playerStatsManager.maxGreenMP;
+        saveData.maxYellowMP = playerStatsManager.maxYellowMP;
+        saveData.maxBlueMP = playerStatsManager.maxBlueMP;
+        saveData.maxBrownMP = playerStatsManager.maxBrownMP;
     }
 
 
@@ -96,7 +109,7 @@ public class GameSaveManager : MonoBehaviour
                 playerStatsManager.skillSlot[i].GetComponent<SkillSlot>().skillID = saveData.slotSkillId[i];
                 playerStatsManager.SetImagesToSkill(saveData.slotSkillId[i], i);
 
-
+                playerStatsManager.skillSlot[i].GetComponent<SkillSlot>().SetSkillMP();
 
             }
 

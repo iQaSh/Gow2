@@ -30,20 +30,45 @@ public class EnemyMove : MonoBehaviour
         if (hintDelaySeconds <= 0)
         {
 
-            MarkHint();
+           // MarkHint();
             hintDelaySeconds = hintDelay;
         }
 
     }
 
+
+    private void OnEnable()
+    {
+        Debug.Log("OnEnable+++++++++++ ");
+        //MarkHint();
+        StartCoroutine(PauseAndMove());
+    
+
+    }
+     
+    private IEnumerator PauseAndMove()
+    {
+        yield return new WaitForSeconds(1f);
+     
+
+        MarkHint();
+    }
+
+
+
+
     //First, I want to find all possible matches on the board
     List<GameObject> FindAllMatches()
     {
         List<GameObject> possibleMoves = new List<GameObject>();
+ //      Debug.Log("FindAllMatches =============");
+  //      Debug.Log("FindAllMatches " + enemyBoard.width);
         for (int i = 0; i < enemyBoard.width; i++)
         {
+    //        Debug.Log("FindAllMatches ++++++++++ i");
             for (int j = 0; j < enemyBoard.height; j++)
             {
+        
                 if (enemyBoard.allEnemyGems[i, j] != null)
                 {
                     if (i < enemyBoard.width - 1)
@@ -64,28 +89,39 @@ public class EnemyMove : MonoBehaviour
                 }
             }
         }
+        
         return possibleMoves;
     }
     //Pick one of those matches randomly
     GameObject PickOneRandomly()
     {
+        
         List<GameObject> possibleMoves = new List<GameObject>();
         possibleMoves = FindAllMatches();
         if (possibleMoves.Count > 0)
         {
+            Debug.Log("PickOneRandomly 1");
             int pieceToUse = Random.Range(0, possibleMoves.Count);
             return possibleMoves[pieceToUse];
         }
+        Debug.Log("PickOneRandomly null");
         return null;
     }
     //Create the hint behind the chosen match
     //Create te hint behind the chosen match
+
+
+    public void Test()
+    {
+        Debug.Log("Test");
+        MarkHint();
+    }
+
     private async Task MarkHint()
     {
         Debug.Log("MarkHint");
         GameObject move = PickOneRandomly();
-        if (move != null && enemyBoard.currentState == GameState.move);
-        {
+
          //   currentHint = Instantiate(hintParticle, move.transform.position, Quaternion.identity);
            // currentHint2 = Instantiate(hintParticle, move.transform.position, Quaternion.identity);
 
@@ -202,7 +238,7 @@ public class EnemyMove : MonoBehaviour
 
          //   DestroyHint();
 
-        }
+        
     }
     //Destroy the hint.
     public void DestroyHint()

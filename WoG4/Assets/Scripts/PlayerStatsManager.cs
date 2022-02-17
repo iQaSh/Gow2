@@ -7,11 +7,22 @@ using UnityEngine.UI;
 public class PlayerStatsManager : MonoBehaviour
 {
     //public String playerName;
-    public int playerMaxHP = 100;
+    [Header("Main Stats")]
+    public int playerMaxHP;
     public Text playerHPText;
     public int playerLvl;
     public int playerXP;
     public int playerSP;
+
+
+    [Header("MP Stats")]
+    public int maxRedMP;
+    public int maxGreenMP;
+    public int maxYellowMP;
+    public int maxBlueMP;
+    public int maxBrownMP;
+
+    [Header("Not Editable Stats")]
     public Text redMPText;
     public Text greenMPText;
     public Text yellowMPText;
@@ -23,8 +34,12 @@ public class PlayerStatsManager : MonoBehaviour
     public int blueMP;
     public int brownMP;
     public GameObject[] skillSlot;
+
+
+    
     //   public SaveData saveData;
     private SkillPanelManager skillPanelManager;
+    private GameSaveManager gameSaveManager;
 
 
 
@@ -35,14 +50,7 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void SetImagesToSkill(int ID, int slot)
     {
-        //for (int i = 0; i < skillSlot.Length; i++)
-        //{
-        //    if (ID < 999)
-        //    {
-        //        Debug.Log("skill id = " + ID);
-        //        skillSlot[i].GetComponent<Image>().sprite = skillPanelManager.playerSkills[ID].Icon;
-        //    }
-        //}
+
         skillSlot[slot].GetComponent<Image>().sprite = skillPanelManager.playerSkills[ID].Icon;
 
     }
@@ -50,8 +58,22 @@ public class PlayerStatsManager : MonoBehaviour
 
     private void Start()
     {
-        playerHPText.text = $"{playerMaxHP}/{playerMaxHP}";
+        gameSaveManager = FindObjectOfType<GameSaveManager>();
+
         skillPanelManager = FindObjectOfType<SkillPanelManager>();
+
+        LoadDataOnStart();
+    }
+
+    private void LoadDataOnStart()//загрузка сохранения и установка данных
+    {
+        gameSaveManager.LoadScriptables();
+        playerHPText.text = $"{playerMaxHP}/{playerMaxHP}";
+        blueMPText.text = $"0/{maxBlueMP}";
+        redMPText.text = $"0/{maxRedMP}";
+        greenMPText.text = $"0/{maxGreenMP}";
+        yellowMPText.text = $"0/{maxYellowMP}";
+        brownMPText.text = $"0/{maxBrownMP}";
 
     }
 
